@@ -3,8 +3,14 @@ input=$1
 # Set "," as the field separator using $IFS 
 # and read line by line using while read combo 
 
+pre_insta(){
+
+
+}
 install(){
- pre_install
+ server=$3@$2
+ service_name=$1
+ pre_install server
 
 }
 
@@ -18,6 +24,6 @@ do
   echo "  Service Location="$f2
   echo "  Service User Name="$f3
   echo "  Service Options="$f4
-  install $f1 $f2 $f3
+  install $f1 $f2 $f3 $f4
 done < "$input"
 
