@@ -1,14 +1,15 @@
 #!/bin/bash
-set -ex
-init_ssh(){
+#set -ex
+input=$1
+
+init_ssh() {
   user_name=$1
   ip_address=$2
-  ssh $user_name@$ip_address mkdir -p .ssh
-  cat ~/.ssh/id_rsa.pub | ssh $user_name@$ip_address 'cat >> .ssh/authorized_keys'
-  ssh $user_name@$ip_address "chmod 700 .ssh; chmod 640 .ssh/authorized_keys"
+  ssh $user_name@$ip_address "mkdir -p .ssh" < /dev/null
+  cat ~/.ssh/id_rsa.pub | ssh $user_name@$ip_address "cat >> .ssh/authorized_keys" 
+  ssh $user_name@$ip_address "chmod 700 .ssh; chmod 640 .ssh/authorized_keys" < /dev/null
 }
 
-input=$1
 # Set "," as the field separator using $IFS 
 # and read line by line using while read combo 
 
