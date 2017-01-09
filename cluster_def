@@ -1,0 +1,3 @@
+#Service Name,Service location, service options
+hadoop-namenode,172.17.0.2,ubuntu,""
+hadoop-datanode,172.17.0.3,ubuntu,"172.17.0.2"
