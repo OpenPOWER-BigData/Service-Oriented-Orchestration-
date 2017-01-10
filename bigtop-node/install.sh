@@ -33,7 +33,7 @@ install_package https://ci.bigtop.apache.org/job/Bigtop-trunk-packages/COMPONENT
 install_package https://ci.bigtop.apache.org/job/Bigtop-trunk-packages/COMPONENTS=zookeeper,OS=ubuntu-16.04/lastSuccessfulBuild/artifact/output/zookeeper/zookeeper_3.4.6-1_all.deb zookeeper_3.4.6-1_all.deb 
 cd $pkg_dir
 RUNLEVEL=1
-echo $1 | sudo -S  dpkg -i hadoop_*.deb hadoop-client_*.deb hadoop-conf-*.deb hadoop-hdfs-*.deb hadoop-httpfs_*.deb  hadoop-mapreduce*.deb hadoop-yarn*.deb libhdfs_*.deb
+echo $1 | sudo -S  dpkg -i hadoop_*.deb hadoop-client*.deb hadoop-conf*.deb hadoop-hdfs*.deb hadoop-httpfs*.deb  hadoop-mapreduce*.deb hadoop-yarn*.deb libhdfs0_*.deb
 cd .. 
 export HADOOP_PREFIX=/usr/lib/hadoop
 export HADOOP_HOME=$HADOOP_PREFIX
