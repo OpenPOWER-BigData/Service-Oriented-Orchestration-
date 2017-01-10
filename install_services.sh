@@ -3,15 +3,18 @@ input=$1
 # Set "," as the field separator using $IFS 
 # and read line by line using while read combo 
 
-pre_insta(){
+read -s -p "Enter solution user's Password: " bd_passwd
 
-
+prep_node(){
+ssh $1 "bash -s" < bigtop-node/install.sh $bd_passwd
 }
+
 install(){
  server=$3@$2
  service_name=$1
- pre_install server
-
+ prep_node server 
+ ssh $1 "bash -s" < $service_name/install.sh $bd_passwd
+ ssh $1 "bash -s" < $service_name/start.sh $bd_passwd
 }
 
 while IFS=',' read -r f1 f2 f3 f4 f5 f6 f7
