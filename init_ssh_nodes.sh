@@ -23,5 +23,6 @@ do
   echo "  Service Location="$f2
   echo "  Service User Name="$f3
   echo "  Service Options="$f4
-  init_ssh $f3 $f2
+ init_ssh root $f2
+ init_ssh $f3 $f2
 done < "$input"
