@@ -1,2 +1,2 @@
 #!/bin/bash
-service hadoop-hdfs-namenode restart
+service hadoop-hdfs-datanode restart

@@ -16,6 +16,6 @@ $SUDO -u hdfs hadoop fs -chown $BD_USER /user/$BD_USER
 $SUDO -u hdfs hadoop fs -mkdir -p /history_logs
 $SUDO -u hdfs hadoop fs -chown -R spark:spark /history_logs
 $SUDO -u hdfs hadoop fs -chmod -R 1777 /history_logs
-sudo chmod -R 1777 /tmp
+#sudo chmod -R 1777 /tmp
 
 

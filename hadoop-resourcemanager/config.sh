@@ -32,5 +32,3 @@ add_element "dfs.namenode.datanode.registration.ip-hostname-check" "false" "/etc
 
 echo "*                soft    nofile          100000" | tee -a  /etc/security/limits.conf
 echo "*                hard    nofile          100000" | tee -a  /etc/security/limits.conf
-
-	
