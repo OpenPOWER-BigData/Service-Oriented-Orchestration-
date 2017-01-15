@@ -31,7 +31,12 @@ prep_node(){
 	server=$1
 	bd_user=$2
 	service_name=$3
+	namenode=$4
+	resourcemanager=$5
+	sparkmaster=$6
+	
 	ssh $server "bash -s" < bigtop-node/install.sh $bd_user $SPARK_VERSION
+	ssh $server "bash -s" < bigtop-node/config.sh $namenode $resourcemanager $sparkmaster $bd_user 
 	# copy scripts
 	scp -r $service_name $server:~/.
 	scp common/* $server:~/$service
@@ -45,10 +50,11 @@ server=root@$bd_ip
 service_name=$1
 namenode=$4
 resourcemanager=$5
+sparkmaster=$6
 
-prep_node $server $bd_user $service_name
+prep_node $server $bd_user $service_name $namenode $resourcemanager $sparkmaster
 ssh $server "$service_name/install.sh $bd_user $bd_passwd" < /dev/null
-ssh $server "$service_name/config.sh $namenode $resourcemanager $bd_user $bd_passwd" < /dev/null
+ssh $server "$service_name/config.sh $namenode $resourcemanager $sparkmaster $bd_user $bd_passwd " < /dev/null
 ssh $server "$service_name/start.sh $bd_user $bd_passwd" < /dev/null
 }
 
@@ -63,6 +69,6 @@ do
   echo "  Service User Name="$f3
   echo "  NameNode hostname="$f4
  echo "  ResourceManager hostname="$f5
-install_service $f1 $f2 $f3 $f4 $f5
+install_service $f1 $f2 $f3 $f4 $f5 $f6 
 done < "$input"
 

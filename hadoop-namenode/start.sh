@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+#set -ex
 BD_USER=$1
 BD_PASSWD=$2
 #SUDO="echo $BD_PASSWD | sudo -S" 

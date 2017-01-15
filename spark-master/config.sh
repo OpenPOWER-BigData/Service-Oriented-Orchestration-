@@ -4,6 +4,7 @@ NAMENODE=$1
 RESOURCEMANAGER=$2
 SPARK_MASTER=$3
 BD_USER=$4
+
 change_xml_element() {
     name=$1
     value=$2
@@ -42,19 +43,41 @@ change_hdfs_dir(){
     change_xml_element $option_name $value "/etc/hadoop/conf/hdfs-site.xml"
 }
 
+change_spark_local_dir(){
+    suffix=$1
+
+    j=1
+    value=""
+    while read i
+    do
+        if [ -z $i ]; then continue; fi
+        dir_name="/hdd${j}/${suffix}"
+        if [ -z $value ]; then
+            value=${dir_name}
+        else
+            value=${value}","${dir_name}
+        fi
+        sudo mkdir -p ${dir_name}
+        j=$[$j+1]
+    done < disk_list
+
+    echo "export SPARK_LOCAL_DIRS=$value" >>/etc/spark/conf/spark-env.sh
+}
 
 
 if [ -f disk_list ]; then
     ./prep_disks.sh
-     chown -R hdfs:hadoop /hdd*
+    chown -R hdfs:hadoop /hdd*
+
     change_hdfs_dir "hdfs/name" "dfs.namenode.name.dir"
     change_hdfs_dir "hdfs/data" "dfs.datanode.data.dir"
-fi
 
-echo "*                soft    nofile          100000" | tee -a  /etc/security/limits.conf
-echo "*                hard    nofile          100000" | tee -a  /etc/security/limits.conf
+    change_spark_local_dir "spark/local"
+    sudo chown -R spark:spark /hdd*/spark/*
+    sudo chmod -R 1777 /hdd*/spark/*
+fi
+echo "spark.driver.memory             20g" >>/etc/spark/conf/spark-defaults.conf
+echo "spark.driver.cores                8" >>/etc/spark/conf/spark-defaults.conf
+echo "spark.default.parallelism       480" >>/etc/spark/conf/spark-defaults.conf
 	
-	
-sudo -u hdfs hdfs namenode -format -force
-rm -rf /var/lib/hadoop-hdfs/cache/hdfs/dfs/data
-	
+chown -R $USER:hadoop /etc/spark
