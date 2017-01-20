@@ -1,9 +1,9 @@
 #!/bin/bash
 set -ex
 
-sudo apt-get update
-sudo apt-get install -y python wget openssl liblzo2-2 openjdk-8-jdk unzip netcat-openbsd apt-utils openssh-server libsnappy1v5 libsnappy-java ntp cpufrequtils
-sudo wget -O- http://archive.apache.org/dist/bigtop/bigtop-1.1.0/repos/GPG-KEY-bigtop | sudo apt-key add -
-sudo apt-get update
-sudo service ntp start
-sudo ufw disable
+
+if [ $HOSTTYPE = "powerpc64le" ] ; then
+   arch="-ppc64le"
+fi
+wget -q https://ci.bigtop.apache.org/job/Bigtop-trunk-packages/COMPONENTS=zeppelin,OS=ubuntu-16.04$arch/lastSuccessfulBuild/artifact/output/zeppelin/zeppelin_0.6.2-1_all.deb
+RUNLEVEL=1 dpkg -i zeppelin_0.6.2-1_all.deb

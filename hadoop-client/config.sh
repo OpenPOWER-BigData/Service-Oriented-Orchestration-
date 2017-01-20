@@ -21,7 +21,7 @@ add_element(){
     sed -i -e "/<\/configuration>/ s/.*/${C}\n&/" $xml_file
 }
 
-if [ -f node_configured ] ; then
+if [ -f hadoop_client_configured ] ; then
 	exit
 fi
 
@@ -78,4 +78,4 @@ add_element "yarn.resourcemanager.scheduler.address" "$RESOURCEMANAGER:8030" "/e
 add_element "dfs.namenode.datanode.registration.ip-hostname-check" "false" "/etc/hadoop/conf/hdfs-site.xml"
 echo "*                soft    nofile          100000" | sudo tee -a  /etc/security/limits.conf
 echo "*                hard    nofile          100000" | sudo tee -a  /etc/security/limits.conf
-touch node_configured
+touch hadoop_client_configured

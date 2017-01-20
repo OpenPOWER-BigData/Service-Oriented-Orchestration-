@@ -2,9 +2,7 @@
 set -ex
 NAMENODE=$1
 RESOURCEMANAGER=$2
-SPARK_MASTER=$3
-BD_USER=$4
-
+BD_USER=$3
 change_xml_element() {
     name=$1
     value=$2
